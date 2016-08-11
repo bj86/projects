@@ -6,6 +6,7 @@ def SQL_Table():
     c.execute('CREATE TABLE IF NOT EXISTS users(id INTEGER, name TEXT, position INTEGER, signIn REAL, signOut REAL)')
     c.execute('CREATE TABLE IF NOT EXISTS shifts(id INTEGER, name TEXT, signIn REAL, signOut REAL, date REAL)')
     return True
+
 # Returns a timestamp when called.
 def Get_Time():
     ts = time.time()
@@ -93,6 +94,4 @@ def Clock_Out(input_id):
     clear()
     return Verify()
 
-
-#SQL_Table()
 Verify()
