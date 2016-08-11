@@ -47,7 +47,7 @@ def Verify():
         print('User not in database')
         return Verify()
 
-# Self explanatory
+# Creates a new user and id.
 def Create_User():
     print('\nRegister new employee\n')
     input_id = input('>> ID: ')
