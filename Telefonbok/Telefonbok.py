@@ -31,9 +31,10 @@ def add(data):
     pickle.dump(data, open('test.pickle', 'wb'))
     return menu()
 
-def remove():
+def remove(data):
     name = str(input('name: '))
     del data[name]
+    pickle.dump(data, open('test.pickle', 'wb'))
     return menu()
 
 menu()
