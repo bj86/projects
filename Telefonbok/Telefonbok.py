@@ -16,9 +16,6 @@ def menu():
     else:
         return print('Not a valid option!'), menu()
 
-def load():
-    return data, menu()
-
 def read(data):
     name = str(input('name: '))
     print(('number:'), (data[name]))
