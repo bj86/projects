@@ -1,4 +1,5 @@
 from config import *
+import tkinter
 
 
 # This is for making the user table. Only run this once!
@@ -84,7 +85,11 @@ def Clock_Out(input_id):
     c.execute(select_users_in, (input_id,))
     data_in = str(c.fetchall()).strip("[]()'',,")
     conn.commit()
-    if len(data_in) > 0:
+    print(data_in)
+    if data_in == 'None':
+        print("You haven't signed in!")
+        return Verify()
+    else:
         c.execute(update_signout_id, (Get_Time(), input_id))
         c.execute(select_users_name, (input_id,))
         data_name = str(c.fetchall()).strip("[]()'',,")
@@ -94,8 +99,7 @@ def Clock_Out(input_id):
         c.execute(insert_shifts, (input_id,))
         c.execute(delete_shifts, (None, None, None, input_id))
         conn.commit()
-    else:
-        return print('You have not signed in yet!'), Verify()
+        return Verify()
     time.sleep(3.5)
     clear()
     return Verify()
