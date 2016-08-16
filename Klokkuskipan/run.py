@@ -4,9 +4,8 @@ from config import *
 # This is for making the user table. Only run this once!
 def SQL_Table():
     c.execute('CREATE TABLE IF NOT EXISTS users(id INTEGER, name TEXT, position INTEGER, signIn REAL, signOut REAL)')
-    c.execute('CREATE TABLE IF NOT EXISTS shifts(id INTEGER, name TEXT, signIn REAL, signOut REAL, date REAL)')
+    c.execute('CREATE TABLE IF NOT EXISTS shifts(id INTEGER, name TEXT, position INTEGER, signIn REAL, signOut REAL)')
     return True
-
 # Returns a timestamp when called.
 def Get_Time():
     ts = time.time()
@@ -47,7 +46,7 @@ def Verify():
         print('User not in database')
         return Verify()
 
-# Creates a new user and id.
+# Self explanatory
 def Create_User():
     print('\nRegister new employee\n')
     input_id = input('>> ID: ')
@@ -85,13 +84,22 @@ def Clock_Out(input_id):
     c.execute(select_users_in, (input_id,))
     data_in = str(c.fetchall()).strip("[]()'',,")
     conn.commit()
-    c.execute(update_signout_id, (Get_Time(), input_id))
-    c.execute(select_users_name, (input_id,))
-    data_name = str(c.fetchall()).strip("[]()'',,")
-    conn.commit()
-    print('%s ID: %s signed in at %s and signed out at %s' % (data_name, input_id, data_in, Get_Time()))
+    if len(data_in) > 0:
+        c.execute(update_signout_id, (Get_Time(), input_id))
+        c.execute(select_users_name, (input_id,))
+        data_name = str(c.fetchall()).strip("[]()'',,")
+        conn.commit()
+        print('%s ID: %s signed in at %s and signed out at %s' % (data_name, input_id, data_in, Get_Time()))
+        print('Saving data to table: shifts')
+        c.execute(insert_shifts, (input_id,))
+        c.execute(delete_shifts, (None, None, None, input_id))
+        conn.commit()
+    else:
+        return print('You have not signed in yet!'), Verify()
     time.sleep(3.5)
     clear()
     return Verify()
 
+
+#SQL_Table()
 Verify()

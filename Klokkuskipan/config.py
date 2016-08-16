@@ -28,4 +28,10 @@ update_signin_id = "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?" % ('users', 'sign
 select_users_name = "SELECT %s FROM %s WHERE %s = ?" % ('name', 'users', 'id')
 
 # Updates signOut where id = input
-update_signout_id= "UPDATE %s SET %s = ? WHERE %s = ?" % ('users', 'signOut', 'id')
+update_signout_id = "UPDATE %s SET %s = ? WHERE %s = ?" % ('users', 'signOut', 'id')
+
+# Copies the shift to other table
+insert_shifts = "INSERT INTO %s SELECT * FROM %s WHERE %s = ?" % ('shifts', 'users', 'id')
+
+# Resets position, signIn and signOut to Null after saving the shift.
+delete_shifts = "UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?" % ('users', 'position', 'signIn', 'signOut', 'id')
